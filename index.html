@@ -1,10 +1,481 @@
-<html>
-    <head>
-        <title>
-            First page
-        </title>
-    </head>
-    <body bgcolor="green">
-        <h1>This is my first web page</h1>
-    </body>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manufacturing Order Picking (HTML + CSS Prototype)</title>
+  <link rel="stylesheet" href="/workspace/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>MO Picking</span>
+      </div>
+      <div class="header-meta">
+        <span class="chip chip-muted">Device-ready • Barcode input</span>
+        <a class="btn btn-ghost" href="#home">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Screens (hidden by default, shown via :target). Home is the default visible screen. -->
+
+  <!-- MO Detail: MO-1001 -->
+  <section id="mo-1001" class="screen">
+    <div class="container">
+      <a class="link-back" href="#home">← All MOs</a>
+      <div class="page-title">
+        <h1>MO-1001</h1>
+        <div class="title-meta">
+          <span class="chip chip-green">Status: Released</span>
+          <span class="chip">Due: 2025-08-20</span>
+          <span class="chip chip-muted">Work Center: FAB-01</span>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <a class="btn btn-primary" href="#history-1001">Pick History</a>
+        <a class="btn" href="data:text/csv;charset=utf-8,Order,Component,Description,Required,Picked%0AMO-1001,RM-ALU-3MM,Aluminum%203mm,10,4%0AMO-1001,RM-SCR-M4,M4%20Screw,40,28%0AMO-1001,RM-PAINT-BLK,Black%20Paint,5,0" download="MO-1001-pick-history.csv">Export CSV</a>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Bill of Materials</h2>
+          <span class="note">Scan to pick. Progress updates visually.</span>
+        </div>
+        <div class="card-body">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Component #</th>
+                <th>Description</th>
+                <th>Manufacturing Item</th>
+                <th class="num">Required</th>
+                <th class="num">Picked</th>
+                <th class="num">Outstanding</th>
+                <th>Progress</th>
+                <th class="actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>RM-ALU-3MM</td>
+                <td>Aluminum sheet 3mm</td>
+                <td>ALU-SHEET-3</td>
+                <td class="num">10</td>
+                <td class="num">4</td>
+                <td class="num">6</td>
+                <td>
+                  <div class="progress" style="--progress: 40%" aria-label="40% complete"></div>
+                </td>
+                <td class="actions">
+                  <a class="btn btn-small btn-primary" href="#scan-1">Scan</a>
+                </td>
+              </tr>
+              <tr>
+                <td>RM-SCR-M4</td>
+                <td>Socket head cap screw M4</td>
+                <td>SCR-M4-16</td>
+                <td class="num">40</td>
+                <td class="num">28</td>
+                <td class="num">12</td>
+                <td>
+                  <div class="progress" style="--progress: 70%" aria-label="70% complete"></div>
+                </td>
+                <td class="actions">
+                  <a class="btn btn-small btn-primary" href="#scan-2">Scan</a>
+                </td>
+              </tr>
+              <tr>
+                <td>RM-PAINT-BLK</td>
+                <td>Paint, black matte</td>
+                <td>PAINT-BLK-1L</td>
+                <td class="num">5</td>
+                <td class="num">0</td>
+                <td class="num">5</td>
+                <td>
+                  <div class="progress" style="--progress: 0%" aria-label="0% complete"></div>
+                </td>
+                <td class="actions">
+                  <a class="btn btn-small btn-primary" href="#scan-3">Scan</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="help-callout">
+        Tip: Most handheld scanners work as keyboard input. Focus the barcode field and scan.
+      </div>
+    </div>
+  </section>
+
+  <!-- Pick History (MO-1001) -->
+  <section id="history-1001" class="screen">
+    <div class="container">
+      <a class="link-back" href="#mo-1001">← Back to MO-1001</a>
+      <div class="page-title">
+        <h1>Pick History: MO-1001</h1>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Component</th>
+                <th>Manufacturing Item</th>
+                <th class="num">Qty</th>
+                <th>User</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025-08-15</td>
+                <td>09:12</td>
+                <td>RM-ALU-3MM</td>
+                <td>ALU-SHEET-3</td>
+                <td class="num">4</td>
+                <td>op-102</td>
+              </tr>
+              <tr>
+                <td>2025-08-15</td>
+                <td>10:25</td>
+                <td>RM-SCR-M4</td>
+                <td>SCR-M4-16</td>
+                <td class="num">20</td>
+                <td>op-104</td>
+              </tr>
+              <tr>
+                <td>2025-08-16</td>
+                <td>14:03</td>
+                <td>RM-SCR-M4</td>
+                <td>SCR-M4-16</td>
+                <td class="num">8</td>
+                <td>op-104</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quantity Entry (Line 1) -->
+  <section id="qty-1" class="screen">
+    <div class="container">
+      <a class="link-back" href="#mo-1001">← Back to MO-1001</a>
+      <div class="page-title">
+        <h1>Enter Quantity Picked</h1>
+        <div class="title-meta">
+          <span class="chip">Component: RM-ALU-3MM</span>
+          <span class="chip">Mfg Item: ALU-SHEET-3</span>
+          <span class="chip chip-muted">Required: 10</span>
+          <span class="chip chip-muted">Picked: 4</span>
+          <span class="chip chip-amber">Outstanding: 6</span>
+        </div>
+      </div>
+
+      <div class="card narrow">
+        <div class="card-body form">
+          <label for="qty1">Quantity picked</label>
+          <input id="qty1" type="number" min="0" step="1" placeholder="Enter quantity">
+          <div class="form-actions">
+            <a class="btn" href="#scan-1">Back</a>
+            <a class="btn btn-primary" href="#success-1">Save Pick</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quantity Entry (Line 2) -->
+  <section id="qty-2" class="screen">
+    <div class="container">
+      <a class="link-back" href="#mo-1001">← Back to MO-1001</a>
+      <div class="page-title">
+        <h1>Enter Quantity Picked</h1>
+        <div class="title-meta">
+          <span class="chip">Component: RM-SCR-M4</span>
+          <span class="chip">Mfg Item: SCR-M4-16</span>
+          <span class="chip chip-muted">Required: 40</span>
+          <span class="chip chip-muted">Picked: 28</span>
+          <span class="chip chip-amber">Outstanding: 12</span>
+        </div>
+      </div>
+
+      <div class="card narrow">
+        <div class="card-body form">
+          <label for="qty2">Quantity picked</label>
+          <input id="qty2" type="number" min="0" step="1" placeholder="Enter quantity">
+          <div class="form-actions">
+            <a class="btn" href="#scan-2">Back</a>
+            <a class="btn btn-primary" href="#success-2">Save Pick</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quantity Entry (Line 3) -->
+  <section id="qty-3" class="screen">
+    <div class="container">
+      <a class="link-back" href="#mo-1001">← Back to MO-1001</a>
+      <div class="page-title">
+        <h1>Enter Quantity Picked</h1>
+        <div class="title-meta">
+          <span class="chip">Component: RM-PAINT-BLK</span>
+          <span class="chip">Mfg Item: PAINT-BLK-1L</span>
+          <span class="chip chip-muted">Required: 5</span>
+          <span class="chip chip-muted">Picked: 0</span>
+          <span class="chip chip-amber">Outstanding: 5</span>
+        </div>
+      </div>
+
+      <div class="card narrow">
+        <div class="card-body form">
+          <label for="qty3">Quantity picked</label>
+          <input id="qty3" type="number" min="0" step="1" placeholder="Enter quantity">
+          <div class="form-actions">
+            <a class="btn" href="#scan-3">Back</a>
+            <a class="btn btn-primary" href="#success-3">Save Pick</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Home (default visible) -->
+  <section id="home-screen" class="screen screen-home">
+    <div class="container">
+      <div class="page-title">
+        <h1>Manufacturing Orders</h1>
+        <div class="title-meta">
+          <span class="chip chip-muted">3 active</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="filters">
+            <label class="sr-only" for="search">Search</label>
+            <input id="search" type="search" placeholder="Search order #, date, status (visual only)">
+            <div class="filter-chips">
+              <span class="chip chip-green">Released</span>
+              <span class="chip chip-amber">In Progress</span>
+              <span class="chip chip-muted">Closed</span>
+            </div>
+          </div>
+
+          <div class="grid">
+            <a class="mo-card" href="#mo-1001">
+              <div class="mo-card-head">
+                <h3>MO-1001</h3>
+                <span class="chip chip-green">Released</span>
+              </div>
+              <div class="mo-card-body">
+                <div class="pair"><span>Item</span><strong>ASM-ALU-FRM</strong></div>
+                <div class="pair"><span>Due</span><strong>2025-08-20</strong></div>
+                <div class="pair"><span>Lines</span><strong>3</strong></div>
+              </div>
+              <div class="mo-card-foot">
+                <div class="progress" style="--progress: 35%" aria-label="35% picked"></div>
+              </div>
+            </a>
+
+            <a class="mo-card disabled" href="#home">
+              <div class="mo-card-head">
+                <h3>MO-1002</h3>
+                <span class="chip chip-amber">Planned</span>
+              </div>
+              <div class="mo-card-body">
+                <div class="pair"><span>Item</span><strong>ASM-CVR-PLT</strong></div>
+                <div class="pair"><span>Due</span><strong>2025-08-23</strong></div>
+                <div class="pair"><span>Lines</span><strong>5</strong></div>
+              </div>
+              <div class="mo-card-foot">
+                <div class="progress" style="--progress: 0%" aria-label="0% picked"></div>
+              </div>
+            </a>
+
+            <a class="mo-card disabled" href="#home">
+              <div class="mo-card-head">
+                <h3>MO-1003</h3>
+                <span class="chip chip-muted">Closed</span>
+              </div>
+              <div class="mo-card-body">
+                <div class="pair"><span>Item</span><strong>ASM-FRM-KIT</strong></div>
+                <div class="pair"><span>Due</span><strong>2025-08-01</strong></div>
+                <div class="pair"><span>Lines</span><strong>7</strong></div>
+              </div>
+              <div class="mo-card-foot">
+                <div class="progress" style="--progress: 100%" aria-label="100% picked"></div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="help-callout">
+        This is a static prototype. Barcode matching, quantity math, and persistence require JavaScript or backend integration.
+      </div>
+    </div>
+  </section>
+
+  <!-- CSS-only Modals -->
+  
+  <!-- Scan modal (Line 1) -->
+  <div id="scan-1" class="modal">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Scan Barcode</h3>
+        <a class="close" href="#mo-1001" aria-label="Close">×</a>
+      </div>
+      <div class="panel-body">
+        <div class="kv"><span>Component</span><strong>RM-ALU-3MM</strong></div>
+        <div class="kv"><span>Mfg Item</span><strong>ALU-SHEET-3</strong></div>
+        <label for="barcode1">Barcode input</label>
+        <input id="barcode1" type="text" placeholder="Scan or type barcode">
+        <div class="panel-actions">
+          <a class="btn" href="#alert-wrong-1">Wrong Item</a>
+          <a class="btn btn-primary" href="#qty-1">Match & Continue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scan modal (Line 2) -->
+  <div id="scan-2" class="modal">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Scan Barcode</h3>
+        <a class="close" href="#mo-1001" aria-label="Close">×</a>
+      </div>
+      <div class="panel-body">
+        <div class="kv"><span>Component</span><strong>RM-SCR-M4</strong></div>
+        <div class="kv"><span>Mfg Item</span><strong>SCR-M4-16</strong></div>
+        <label for="barcode2">Barcode input</label>
+        <input id="barcode2" type="text" placeholder="Scan or type barcode">
+        <div class="panel-actions">
+          <a class="btn" href="#alert-wrong-2">Wrong Item</a>
+          <a class="btn btn-primary" href="#qty-2">Match & Continue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scan modal (Line 3) -->
+  <div id="scan-3" class="modal">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Scan Barcode</h3>
+        <a class="close" href="#mo-1001" aria-label="Close">×</a>
+      </div>
+      <div class="panel-body">
+        <div class="kv"><span>Component</span><strong>RM-PAINT-BLK</strong></div>
+        <div class="kv"><span>Mfg Item</span><strong>PAINT-BLK-1L</strong></div>
+        <label for="barcode3">Barcode input</label>
+        <input id="barcode3" type="text" placeholder="Scan or type barcode">
+        <div class="panel-actions">
+          <a class="btn" href="#alert-wrong-3">Wrong Item</a>
+          <a class="btn btn-primary" href="#qty-3">Match & Continue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wrong item alerts -->
+  <div id="alert-wrong-1" class="modal">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Wrong Item Scanned</h3>
+        <a class="close" href="#scan-1" aria-label="Close">×</a>
+      </div>
+      <div class="panel-body">
+        <p>The scanned barcode does not match <strong>ALU-SHEET-3</strong>. Try again.</p>
+        <div class="panel-actions">
+          <a class="btn btn-danger" href="#scan-1">Rescan</a>
+          <a class="btn" href="#mo-1001">Back</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="alert-wrong-2" class="modal">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Wrong Item Scanned</h3>
+        <a class="close" href="#scan-2" aria-label="Close">×</a>
+      </div>
+      <div class="panel-body">
+        <p>The scanned barcode does not match <strong>SCR-M4-16</strong>. Try again.</p>
+        <div class="panel-actions">
+          <a class="btn btn-danger" href="#scan-2">Rescan</a>
+          <a class="btn" href="#mo-1001">Back</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="alert-wrong-3" class="modal">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Wrong Item Scanned</h3>
+        <a class="close" href="#scan-3" aria-label="Close">×</a>
+      </div>
+      <div class="panel-body">
+        <p>The scanned barcode does not match <strong>PAINT-BLK-1L</strong>. Try again.</p>
+        <div class="panel-actions">
+          <a class="btn btn-danger" href="#scan-3">Rescan</a>
+          <a class="btn" href="#mo-1001">Back</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success toasts -->
+  <div id="success-1" class="modal modal-toast">
+    <div class="panel">
+      <div class="panel-body">
+        <p>Pick saved for <strong>RM-ALU-3MM</strong>.</p>
+        <div class="panel-actions">
+          <a class="btn btn-primary" href="#mo-1001">Continue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="success-2" class="modal modal-toast">
+    <div class="panel">
+      <div class="panel-body">
+        <p>Pick saved for <strong>RM-SCR-M4</strong>.</p>
+        <div class="panel-actions">
+          <a class="btn btn-primary" href="#mo-1001">Continue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="success-3" class="modal modal-toast">
+    <div class="panel">
+      <div class="panel-body">
+        <p>Pick saved for <strong>RM-PAINT-BLK</strong>.</p>
+        <div class="panel-actions">
+          <a class="btn btn-primary" href="#mo-1001">Continue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen visibility rules: Home shows by default; hidden when any screen is targeted. -->
+  <style>
+    /* Fallback notice if /workspace/styles.css fails to load */
+    .no-css { display: none; }
+  </style>
+</body>
 </html>
